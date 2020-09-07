@@ -47,7 +47,7 @@ module.exports = function (/* ctx */) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
 
       // transpile: false,
 
@@ -72,6 +72,10 @@ module.exports = function (/* ctx */) {
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           exclude: /node_modules/,
+        });
+        cfg.module.rules.push({
+          test: /\.pug$/,
+          loader: 'pug-plain-loader',
         });
       },
     },
