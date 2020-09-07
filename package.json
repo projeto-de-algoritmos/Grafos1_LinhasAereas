@@ -2,7 +2,7 @@
   "name": "grafos-1-linhas-aereas",
   "version": "0.0.1",
   "description": "O projeto consiste de uma aplicação para achar a menor conexão de linhas aereas entre duas cidades.",
-  "productName": "Grafos 1 Linhas Aereas",
+  "productName": "Grafos 1 - Linhas Aereas",
   "author": "Gabriel Climaco <gabrielsclimaco@gmail.com>",
   "private": true,
   "scripts": {
