@@ -14,10 +14,29 @@ O projeto consiste de uma aplicação para achar a menor conexão de linhas aere
 
 ## Screenshots
 
+![Print 1](public/Print1.png)
+![Print 2](public/Print2.png)
+![Print 3](public/Print3.png)
+![Print 4](public/Print4.png)
+
 ## Instalação
 **Linguagem**: JavaScript<br>
 **Framework**: [Quasar](https://quasar.dev/) ([Vue.js](https://vuejs.org/))<br>
 
 ## Uso
+
+> OBS.: É recomendado o uso da versão estável mais recente até a presente data (12.18.3).
+
+Após clonar o projeto, na pasta raiz, instale as dependências:
+
+```
+yarn
+```
+
+Feito isso, basta rodar o seguinte comando e a aplicação irá abrir em `http://localhost:8080`
+
+```
+npx quasar dev
+```
 
 ## Outros
