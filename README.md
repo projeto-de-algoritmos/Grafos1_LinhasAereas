@@ -47,4 +47,6 @@ npx quasar dev
 
 ## Outros
 
-Foi utilizada a biblioteca [Sigma.js](https://github.com/jacomyal/sigma.js) para renderização dos grafos.
+Foi utilizada a biblioteca [Sigma.js](https://github.com/jacomyal/sigma.js) para renderização dos grafos, [Pug](https://pugjs.org/) como linguagem de marcação alternativa ao HTML e [Stylus](https://stylus-lang.com/) como linguagem de estilo alternativa ao CSS.
+
+Confira nosso [video explicativo](video-explicativo.mp4) sobre o projeto.
