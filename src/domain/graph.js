@@ -45,6 +45,8 @@ class Graph {
     }
   }
 
+  
+
   /**
    * Add an edge between two vertices, creating a connection between them
    * @param  {string} firstVertex - First vertex to be connected
