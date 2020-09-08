@@ -1,0 +1,20 @@
+[
+  { "code": "BSB", "name": "Brasília"},
+  { "code": "GYN", "name": "Goiânia"},
+  { "code": "RBR", "name": "Rio Branco"},
+  { "code": "BEL", "name": "Belém"},
+  { "code": "BVB", "name": "Boa Vista"},
+  { "code": "MCZ", "name": "Maceió"},
+  { "code": "FOR", "name": "Fortaleza"},
+  { "code": "SLZ", "name": "São Luiz"},
+  { "code": "THE", "name": "Teresina"},
+  { "code": "AJU", "name": "Aracaju"},
+  { "code": "VIX", "name": "Vitória"},
+  { "code": "UDI", "name": "Uberlândia"},
+  { "code": "SDU", "name": "Santos Dumont"},
+  { "code": "GIG", "name": "Galeão"},
+  { "code": "CGH", "name": "Congonhas"},
+  { "code": "GRU", "name": "Guarulhos"},
+  { "code": "CWB", "name": "Curitiba"},
+  { "code": "POA", "name": "Porto Alegre"}
+]
