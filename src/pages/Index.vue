@@ -1,44 +1,43 @@
 <template lang='pug'>
 q-page.row.index
   .col-xs-12.col-sm-6.col-md-4.column.items-center
-    //- q-btn(
-      color='secondary'
-      label='Adicionar cidade'
-      @click='openAirlineAddCityDialog = true').q-mt-md
-    //- q-btn(
-      color='secondary'
-      label='Conectar cidade'
-      @click='openAirlineConnectCityDialog = true').q-mt-md
-    //- q-card.add-city-dialog
-    //-   q-card-section
-    //-     .text-h6 Achar
-    //-     .text-subtitle Selecione as cidades para adicionar uma conexão da primeir
-    //-   q-card-section.column
-    //-     q-select(
-    //-       outlined
-    //-       emit-value
-    //-       label='Primeira cidade'
-    //-       :options='city1Options'
-    //-       v-model='city1')
-    //-     q-icon(name='arrow_downward' size='lg').self-center.q-my-md
-    //-     q-select(
-    //-       outlined
-    //-       emit-value
-    //-       label='Segunda cidade'
-    //-       :options='city2Options'
-    //-       :disabled='!city1'
-    //-       :readonly='!city1'
-    //-       v-model='city2')
+    q-card.find-path-card.q-mt-sm
+      q-card-section.no-padding.q-mx-md
+        .text-h6 Achar menor distância entre duas cidades
+        .text-subtitle Selecione as cidades que se deseja saber o menor caminho
+      q-card-section.column.no-padding.q-mx-md.q-my-sm
+        q-select(
+          outlined
+          emit-value
+          label='Primeira cidade'
+          :options='city1Options'
+          v-model='city1').no-padding
+        q-icon(
+          size='lg'
+          color='accent'
+          name='arrow_downward').self-center
+        q-select(
+          outlined
+          emit-value
+          label='Segunda cidade'
+          :options='city2Options'
+          :disabled='!city1'
+          :readonly='!city1'
+          v-model='city2').no-padding
       q-card-actions(align='center')
         q-btn(
           color='secondary'
           label='Buscar rota'
           @click='onBFS')
+    q-separator.q-mt-md.q-pl-md
+    .text-h6.q-my-sm Menor caminho
+    .solution.q-px-md
+      #sigma-solution-container.shadow-2
   .col-xs-12.col-sm-6.col-md-8.column
     .col-1.column.items-center.justify-center
       .text-h3.graph-title Conexões
     .col-11.q-pa-md
-      #sigma-container
+      #sigma-container.shadow-2
   add-city-dialog(
     :open='openAirlineAddCityDialog'
     @close='openAirlineAddCityDialog = false'
@@ -66,10 +65,24 @@ export default {
     airline: new Airline(),
     openAirlineAddCityDialog: false,
     openAirlineConnectCityDialog: false,
+    city1: '',
+    city2: '',
     sigmaObject: {},
+    sigmaSolution: {},
     path: [],
   }),
   computed: {
+    city1Options() {
+      return this.airline.cities.map((city) => ({
+        label: `${city.name} - ${city.code}`,
+        value: city.code,
+      }));
+    },
+    city2Options() {
+      return this.airline.cities
+        .filter((city) => city.code !== this.city1)
+        .map((city) => ({ label: `${city.name} - ${city.code}`, value: city.code }));
+    },
     graph() {
       return {
         nodes: this.nodes,
@@ -103,6 +116,45 @@ export default {
 
           i += 1;
         });
+      });
+
+      return edges;
+    },
+    graphSolution() {
+      return {
+        nodes: this.nodesSolution,
+        edges: this.edgesSolution,
+      };
+    },
+    nodesSolution() {
+      return this.path.map((cityCode) => {
+        const city = this.airline.findCity(cityCode);
+        return {
+          id: city.code,
+          label: city.name,
+          x: Math.random(),
+          y: Math.random(),
+          size: 2,
+          color: '#a5cc1f',
+        };
+      });
+    },
+    edgesSolution() {
+      const edges = [];
+
+      let i = 0;
+      this.path.forEach((cityCode, index) => {
+        if (this.path[index + 1]) {
+          edges.push({
+            id: i,
+            source: cityCode,
+            target: this.path[index + 1],
+            color: '#46516d',
+            type: 'curvedArrow',
+          });
+
+          i += 1;
+        }
       });
 
       return edges;
@@ -151,7 +203,36 @@ export default {
       this.sigmaObject.graph.read(this.graph);
       this.sigmaObject.refresh();
     },
-    onBFS() {},
+    clearElement() {
+      const canvasSolutionElement = document.getElementById('sigma-solution-container');
+      canvasSolutionElement.innerHTML = '';
+    },
+    initializeSigmaSolution() {
+      this.clearElement();
+      this.sigmaSolution = new sigma( // eslint-disable-line
+        {
+          renderer: {
+            container: document.getElementById('sigma-solution-container'),
+            type: 'canvas',
+          },
+          settings: {
+            edgeLabelSize: 'proportional',
+            minArrowSize: 10,
+          },
+        },
+      );
+
+      this.sigmaSolution.graph.read(this.graphSolution);
+      this.sigmaSolution.refresh();
+    },
+    onBFS() {
+      const city1 = this.airline.findCity(this.city1);
+      const city2 = this.airline.findCity(this.city2);
+
+      this.path = this.airline.bfs(city1, city2);
+
+      this.initializeSigmaSolution();
+    },
   },
   mounted() {
     this.populateAirline();
@@ -162,9 +243,12 @@ export default {
 
 <style lang="stylus">
 .index
-  .graph-title
+  .graph-title, .find-path-card, .text-h6
     color $accent
-  #sigma-container
+  .solution
+    width 100%
+    height 50%
+  #sigma-container, #sigma-solution-container
     background #fafafa
     width 100%
     height 100%
