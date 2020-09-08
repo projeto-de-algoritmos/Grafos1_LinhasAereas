@@ -14,7 +14,7 @@ class Airline {
    * @param  {string} code - city's IATA code. More info https://en.wikipedia.org/wiki/IATA_airport_code
    */
   addCity(name, code) {
-    const city = new City(name, code);
+    const city = new City(this.cities.length, name, code);
     this.cities.push(city);
   }
 

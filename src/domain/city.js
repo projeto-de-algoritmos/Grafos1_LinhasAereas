@@ -2,10 +2,12 @@
 class City {
   /**
    * Initialize city properties
+   * @param  {string} index - city's index
    * @param  {string} name - city's name
    * @param  {string} code - city's IATA code. More info https://en.wikipedia.org/wiki/IATA_airport_code
    */
-  constructor(name, code) {
+  constructor(index, name, code) {
+    this.index = index;
     this.name = name;
     this.code = code;
     this.connections = [];
