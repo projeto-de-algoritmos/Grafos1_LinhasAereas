@@ -10,7 +10,7 @@
 | 14/0140034  |  Gabriel de Souza Clímaco |
 
 ## Sobre
-O projeto consiste de uma aplicação para achar a menor conexão de linhas aereas entre duas cidades.
+O projeto consiste de uma aplicação para achar a menor conexão de linhas aereas entre duas cidades. O Grafo de linhas aéreas é gerado de forma aleatória.
 
 ## Screenshots
 
@@ -27,6 +27,12 @@ O projeto consiste de uma aplicação para achar a menor conexão de linhas aere
 
 > OBS.: É recomendado o uso da versão estável mais recente até a presente data (12.18.3).
 
+Garanta que o [yarn](https://yarnpkg.com/) está instalado:
+
+```
+npm i -g yarn
+```
+
 Após clonar o projeto, na pasta raiz, instale as dependências:
 
 ```
@@ -40,3 +46,5 @@ npx quasar dev
 ```
 
 ## Outros
+
+Foi utilizada a biblioteca [Sigma.js](https://github.com/jacomyal/sigma.js) para renderização dos grafos.
