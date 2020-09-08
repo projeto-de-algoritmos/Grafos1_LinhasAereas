@@ -18,6 +18,9 @@ class City {
    * @param  {string} cityCode - City's code to be connected
    */
   addConnection(cityCode) {
+    if (~this.connections.indexOf(cityCode) || cityCode === this.code) {
+      return;
+    }
     this.connections.push(cityCode);
   }
 

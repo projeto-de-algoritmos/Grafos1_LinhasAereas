@@ -1,5 +1,17 @@
 import City from './city';
 
+const calculatePath = (previousNode, finishCityCode) => {
+  const shortestPath = [];
+  let currentCity = finishCityCode;
+
+  while (currentCity) {
+    shortestPath.unshift(currentCity);
+    currentCity = previousNode[currentCity];
+  }
+
+  return shortestPath;
+};
+
 /** Class representing the airline graph */
 class Airline {
   /** Initializes properties */
@@ -62,6 +74,7 @@ class Airline {
     const queue = [];
     const visitedCitiesInOrder = [];
     const visited = {};
+    const previousNode = {};
 
     queue.push(startCity);
     visitedCitiesInOrder.push(startCity);
@@ -74,14 +87,16 @@ class Airline {
 
       const isFinishCityNeighbor = neighbors.indexOf(finishCity.code) !== -1;
       if (isFinishCityNeighbor) {
+        previousNode[finishCity.code] = city.code;
         visitedCitiesInOrder.push(finishCity);
 
-        return visitedCitiesInOrder;
+        return calculatePath(previousNode, finishCity.code);
       }
 
       neighbors.forEach((neighborCode) => {
         if (!visited[neighborCode]) {
           visited[neighborCode] = true;
+          previousNode[neighborCode] = city.code;
           const neighborCity = this.findCity(neighborCode);
           visitedCitiesInOrder.push(neighborCity);
           queue.push(neighborCity);
@@ -89,7 +104,7 @@ class Airline {
       });
     }
 
-    return visitedCitiesInOrder;
+    return calculatePath(previousNode, finishCity.code);
   }
 }
 
