@@ -53,6 +53,43 @@ class Airline {
 
     this.numberOfConnections -= 1;
   }
+
+  findCity(cityCode) {
+    return this.cities.find((city) => city.code === cityCode);
+  }
+
+  bfs(startCity, finishCity) {
+    const queue = [];
+    const visitedCitiesInOrder = [];
+    // [{name: 'Brasilia', code: 'BSB'}, {name: 'São PAulo', code: 'CGH'}, ...]
+
+    const visited = {};
+    visited[startCity.code] = true;
+    visitedCitiesInOrder.push(startCity);
+    // { 'BSB': true }
+    // if(visited[city.code])
+    queue.push(startCity);
+
+    while (!!queue.length) {
+      let city = queue.shift();
+
+      if (finishCity.code === city.code) {
+        return visitedCitiesInOrder;
+      }
+
+      const neighbors = city.connections;
+      // ['BSB', 'CGH']
+
+      neighbors.forEach((neighborCode) => {
+        visited[neighborCode] = true;
+        const neighborCity = this.findCity(neighborCode);
+        visitedCitiesInOrder.push(neighborCity);
+        queue.push(neighborCity);
+      });
+    }
+
+    return visitedCitiesInOrder;
+  }
 }
 
 export default Airline;
