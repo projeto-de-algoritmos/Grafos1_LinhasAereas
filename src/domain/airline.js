@@ -61,30 +61,31 @@ class Airline {
   bfs(startCity, finishCity) {
     const queue = [];
     const visitedCitiesInOrder = [];
-    // [{name: 'Brasilia', code: 'BSB'}, {name: 'São PAulo', code: 'CGH'}, ...]
-
     const visited = {};
-    visited[startCity.code] = true;
-    visitedCitiesInOrder.push(startCity);
-    // { 'BSB': true }
-    // if(visited[city.code])
+
     queue.push(startCity);
+    visitedCitiesInOrder.push(startCity);
+    visited[startCity.code] = true;
 
     while (!!queue.length) {
-      let city = queue.shift();
+      const city = queue.shift();
 
-      if (finishCity.code === city.code) {
+      const neighbors = city.connections;
+
+      const isFinishCityNeighbor = neighbors.indexOf(finishCity.code) !== -1;
+      if (isFinishCityNeighbor) {
+        visitedCitiesInOrder.push(finishCity);
+
         return visitedCitiesInOrder;
       }
 
-      const neighbors = city.connections;
-      // ['BSB', 'CGH']
-
       neighbors.forEach((neighborCode) => {
-        visited[neighborCode] = true;
-        const neighborCity = this.findCity(neighborCode);
-        visitedCitiesInOrder.push(neighborCity);
-        queue.push(neighborCity);
+        if (!visited[neighborCode]) {
+          visited[neighborCode] = true;
+          const neighborCity = this.findCity(neighborCode);
+          visitedCitiesInOrder.push(neighborCity);
+          queue.push(neighborCity);
+        }
       });
     }
 

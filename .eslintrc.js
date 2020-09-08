@@ -51,6 +51,7 @@ module.exports = {
   rules: {
     'no-param-reassign': 'off',
     'no-bitwise': 'off',
+    'no-extra-boolean-cast': 'off',
 
     'import/first': 'off',
     'import/named': 'error',
